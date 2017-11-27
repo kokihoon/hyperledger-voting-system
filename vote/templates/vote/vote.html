@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Vote</title>
-</head>
-<body>
-    vote
-</body>
+<html lang="KO">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen and (min-width: 500px) and (max-width:800px)">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head> 
+  <body>
+    <div class ="container">
+      <div class="row">
+        <h1 class="text-center text-danger">후보자 리스트</h1>
+        <table id="example-table-3" width="100%" class="table table-bordered table-hover text-center">
+          <thead>
+            <tr>
+              <td>선택</td>
+              <td>기호</td>
+              <td>후보자 이름</td>
+            </tr>
+          </thead>
+          <tbody>
+            <script type="text/javascript">
+            //  var public_key = {{public_Key}}
+              var count =  3//{{count}}
+              var array =["1", "2", "3"]
+              var cadidate =["고기훈", "강솔", "김지원"]
+              for(var i =0; i <3; i++) {
+                document.write('<tr>')
+                document.write('<td><input type="radio" name="no" value=array[i]></td>')
+                document.write('<td>'+i+'</td>')
+                document.write('<td>'+cadidate[i]+'</td>')
+                document.write('</tr>')
+              }
+            </script>
+          </tbody>
+        </table>
+        <button type="button" class="btn btn-outline btn btn-danger pull-right btn-lg" id="selectBtn">선택</button>
+        <div class="col-lg-12" id="ex3_Result1" ></div>
+        <div class="col-lg-12" id="ex3_Result2" ></div>
+      </div>
+    </div> 
+      <script>
+            // 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
+            $("#selectBtn").click(function(){
+
+                var rowData = new Array();
+                var tdArr = new Array();
+
+                var checkbox = $("input[name=no]:checked");
+
+                // 체크된 체크박스 값을 가져온다
+                checkbox.each(function(i) {
+
+                    // checkbox.parent() : checkbox의 부모는 <td>이다.
+                    // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+                    var tr = checkbox.parent().parent().eq(i);
+                    var td = tr.children();
+
+                    // 체크된 row의 모든 값을 배열에 담는다.
+                    rowData.push(tr.text());
+
+                    // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+                    var no = td.eq(1).text()+", "
+                    var userid = td.eq(2).text();
+
+
+                    // 가져온 값을 배열에 담는다.
+                    tdArr.push(no);
+                    tdArr.push(userid);
+                    //console.log("no : " + no);
+                    //console.log("userid : " + userid);
+                    //console.log("name : " + name);
+                    //console.log("email : " + email);
+                });
+
+                $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
+                $("#ex3_Result2").html(tdArr);
+            });
+
+      </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+       <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+       <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+  </body>
 </html>
