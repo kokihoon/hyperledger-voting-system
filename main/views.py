@@ -18,7 +18,7 @@ def index(request):
                 print('checked user')
                 return redirect('index')
             else:
-                UserCheck.objects.create(user=user)
+                # UserCheck.objects.create(user=user)
                 print('add user')
                 return redirect('vote/')
         else:
