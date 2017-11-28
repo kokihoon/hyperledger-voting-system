@@ -20,7 +20,7 @@ def index(request):
             else:
                 UserCheck.objects.create(user=user)
                 print('add user')
-                return redirect('vote/vote.html')
+                return redirect('vote/')
         else:
             return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
