@@ -25,25 +25,39 @@
         <h1 class="text-center text-danger">후보자 리스트</h1>
         <table id="example-table-3" width="100%" class="table table-bordered table-hover text-center">
           <thead style="background-color:red; color: white;">
-            <tr>
-              <td>선택</td>
-              <td>기호</td>
-              <td>후보자 이름</td>
-            </tr>
+              <th>선택</th>
+              <th>기호</th>
+              <th>후보자 이름</th>
+            
           </thead>
-          <tbody>
+          <tbody id ="tbody1">
             <script type="text/javascript">
-            //  var public_key = {{public_Key}}
-              var count =  3//{{count}}
-              var array =["1", "2", "3"]
-              var cadidate =["고기훈", "강솔", "김지원"]
-              for(var i =0; i <3; i++) {
-                document.write('<tr>')
-                document.write('<td><input type="radio" name="no" value=array[i]></td>')
-                document.write('<td>'+i+'</td>')
-                document.write('<td>'+cadidate[i]+'</td>')
-                document.write('</tr>')
-              }
+              var candidate = [];
+              $(document).ready(function(){
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'http://210.110.180.44:3000/api/Vehicle', true);
+                xhr.send(null);
+
+                xhr.onload = function() {
+                  if(xhr.status == 200) {
+                    console.log("200 ok");
+                    var jsonText = xhr.responseText;
+                    var contact = JSON.parse(jsonText);
+                  
+                    for(var i = 0; i < contact.length; i++) {
+                      candidate.push(contact[i].vin);
+                    }
+                    console.log(candidate);
+                  }
+                  var tbody2 = document.getElementById("tbody1");
+                
+                  for(var i =0; i <candidate.length; i++) {
+                    tbody2.innerHTML +='<td><input type="radio" name="no" value=array[i]></td><td>'+ i +'</td><td>'+candidate[i]+'</td>';
+                  }
+                }
+              
+              });
+        
             </script>
           </tbody>
         </table>
@@ -52,45 +66,54 @@
         <div class="col-lg-12" id="ex3_Result2" ></div>
       </div>
     </div>
-      <script>
-            // 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
-            $("#selectBtn").click(function(){
+    <script>
+      $("#selectBtn").click(function(){
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'http://210.110.180.44:3000/api/offer', true);
+          xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          xhr.send(JSON.stringify({
+            "$class": "org.acme.vehicle.auction.Offer",
+            "bidPrice": 1,
+            "listing": "org.acme.vehicle.auction.VehicleListing#candidate1",
+            "member": "org.acme.vehicle.auction.Member#voter1"
+          }));
+          xhr.onload = function() {
+            if(xhr.status == 200) {
+              console.log("200 ok");
+            }
+          }
+          var checkbox = $("input[name=no]:checked");
 
-                var rowData = new Array();
-                var tdArr = new Array();
+          // 체크된 체크박스 값을 가져온다
+          // checkbox.each(function(i) {
 
-                var checkbox = $("input[name=no]:checked");
+          //     // checkbox.parent() : checkbox의 부모는 <td>이다.
+          //     // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+          //     var tr = checkbox.parent().parent().eq(i);
+          //     var td = tr.children();
 
-                // 체크된 체크박스 값을 가져온다
-                checkbox.each(function(i) {
+          //     // 체크된 row의 모든 값을 배열에 담는다.
+          //     rowData.push(tr.text());
 
-                    // checkbox.parent() : checkbox의 부모는 <td>이다.
-                    // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-                    var tr = checkbox.parent().parent().eq(i);
-                    var td = tr.children();
-
-                    // 체크된 row의 모든 값을 배열에 담는다.
-                    rowData.push(tr.text());
-
-                    // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-                    var no = td.eq(1).text()+", "
-                    var userid = td.eq(2).text();
+          //     // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+          //     var no = td.eq(1).text()+", "
+          //     var userid = td.eq(2).text();
 
 
-                    // 가져온 값을 배열에 담는다.
-                    tdArr.push(no);
-                    tdArr.push(userid);
-                    //console.log("no : " + no);
-                    //console.log("userid : " + userid);
-                    //console.log("name : " + name);
-                    //console.log("email : " + email);
-                });
+          //     // 가져온 값을 배열에 담는다.
+          //     tdArr.push(no);
+          //     tdArr.push(userid);
+          //     //console.log("no : " + no);
+          //     //console.log("userid : " + userid);
+          //     //console.log("name : " + name);
+          //     //console.log("email : " + email);
+          // });
 
-                $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
-                $("#ex3_Result2").html(tdArr);
-            });
+          // $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
+          // $("#ex3_Result2").html(tdArr);
+      });
 
-      </script>
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
        <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
        <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
