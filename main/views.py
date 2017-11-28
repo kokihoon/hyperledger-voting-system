@@ -18,11 +18,10 @@ def index(request):
                 print('checked user')
                 return redirect('index')
             else:
-                # UserCheck.objects.create(user=user)
+                UserCheck.objects.create(user=user)
                 print('add user')
                 return redirect('vote/')
         else:
             return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
         return render(request, 'main/login.html')
-
