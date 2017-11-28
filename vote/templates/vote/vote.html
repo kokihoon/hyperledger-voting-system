@@ -68,49 +68,49 @@
     </div>
     <script>
       $("#selectBtn").click(function(){
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://210.110.180.44:3000/api/offer', true);
-          xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-          xhr.send(JSON.stringify({
-            "$class": "org.acme.vehicle.auction.Offer",
-            "bidPrice": 1,
-            "listing": "org.acme.vehicle.auction.VehicleListing#candidate1",
-            "member": "org.acme.vehicle.auction.Member#voter1"
-          }));
-          xhr.onload = function() {
-            if(xhr.status == 200) {
-              console.log("200 ok");
-            }
+       
+        var checkbox = $("input[name=no]:checked");
+        var userid;
+        // 체크된 체크박스 값을 가져온다
+        checkbox.each(function(i) {
+
+          // checkbox.parent() : checkbox의 부모는 <td>이다.
+          // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+          var tr = checkbox.parent().parent().eq(i);
+          var td = tr.children();
+
+          // 체크된 row의 모든 값을 배열에 담는다.
+          // rowData.push(tr.text());
+
+          // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+          var no = td.eq(1).text()+", "
+          userid = td.eq(2).text();
+
+          // 가져온 값을 배열에 담는다.
+          // tdArr.push(no);
+          // tdArr.push(userid);
+          console.log("no : " + no);
+          console.log("userid : " + userid);
+          //console.log("name : " + name);
+          //console.log("email : " + email);
+        });
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://210.110.180.44:3000/api/Offer', true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify({
+          "$class": "org.acme.vehicle.auction.Offer",
+          "bidPrice": 1,
+          "listing": "org.acme.vehicle.auction.VehicleListing#"+userid,
+          "member": "org.acme.vehicle.auction.Member#"+'{{ user_id }}'
+        }));
+        xhr.onload = function() {
+          if(xhr.status == 200) {
+            console.log("200 ok");
           }
-          var checkbox = $("input[name=no]:checked");
-
-          // 체크된 체크박스 값을 가져온다
-          // checkbox.each(function(i) {
-
-          //     // checkbox.parent() : checkbox의 부모는 <td>이다.
-          //     // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-          //     var tr = checkbox.parent().parent().eq(i);
-          //     var td = tr.children();
-
-          //     // 체크된 row의 모든 값을 배열에 담는다.
-          //     rowData.push(tr.text());
-
-          //     // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-          //     var no = td.eq(1).text()+", "
-          //     var userid = td.eq(2).text();
-
-
-          //     // 가져온 값을 배열에 담는다.
-          //     tdArr.push(no);
-          //     tdArr.push(userid);
-          //     //console.log("no : " + no);
-          //     //console.log("userid : " + userid);
-          //     //console.log("name : " + name);
-          //     //console.log("email : " + email);
-          // });
-
-          // $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
-          // $("#ex3_Result2").html(tdArr);
+        }
+    //  $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
+    //  $("#ex3_Result2").html(tdArr);
       });
 
     </script>
