@@ -34,9 +34,7 @@ def participation_rate(request):
     r_json = r.json()
     if r.status_code == 200:
         for listing in r_json:
-            if not('votes' in listing):
-                continue
-            voted_count += len(listing['votes'])
+            voted_count += listing['ballotCount']
 
         all_user_cnt = 1
         all_user_cnt = len(User.objects.filter(is_superuser=False))

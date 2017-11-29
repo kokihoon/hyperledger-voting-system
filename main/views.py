@@ -2,7 +2,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 
-from .models import UserCheck
+import requests
+
+from .models import UserCheck, VoteEnd
+from VotingSystem.settings import VEHICLE_LISTING_RUL
+
+
 
 
 def index(request):
@@ -26,10 +31,16 @@ def index(request):
         else:
             return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
-        if True:
-            return render(request, 'main/login.html')
+
+        if VoteEnd.objects.all().__len__() > 0:
+            r = requests.get(VEHICLE_LISTING_RUL)
+            r_json = r.json()
+
+            if r.status_code == 200:
+                voteResult = sorted(r_json, key=lambda listing: listing['ballotCount'], reverse=True)
+            return render(request, 'main/Elected.html', {'voteResult': voteResult})
         else:
-            return render(request, 'main/Elected.html')
+            return render(request, 'main/login.html')
 
 
 def super_user(request):
