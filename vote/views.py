@@ -32,15 +32,17 @@ def participation_rate(request):
 
     r = requests.get(VEHICLE_LISTING_RUL)
     r_json = r.json()
-
     if r.status_code == 200:
         for listing in r_json:
+            if not('votes' in listing):
+                continue
             voted_count += len(listing['votes'])
 
+        all_user_cnt = 1
         all_user_cnt = len(User.objects.all())
 
         rate = voted_count / all_user_cnt * 100
-
+        print('rate', rate)
         return HttpResponse(json.dumps({'rate': rate}))
     else:
         return HttpResponse(status=500)
