@@ -25,10 +25,9 @@
         <h1 class="text-center text-danger">후보자 리스트</h1>
         <table id="example-table-3" width="100%" class="table table-bordered table-hover text-center">
           <thead style="background-color:red; color: white;">
-              <th class="text-center">선택</th>
-              <th class="text-center">기호</th>
-              <th class="text-center">후보자 이름</th>
-            
+            <th class="text-center">선택</th>
+            <th class="text-center">기호</th>
+            <th class="text-center">후보자 이름</th>
           </thead>
           <tbody id ="tbody1">
             <script type="text/javascript">
@@ -66,31 +65,15 @@
     </div>
     <script>
       $("#selectBtn").click(function(){
-       
         var checkbox = $("input[name=no]:checked");
         var userid;
-        // 체크된 체크박스 값을 가져온다
         checkbox.each(function(i) {
-
-          // checkbox.parent() : checkbox의 부모는 <td>이다.
-          // checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
           var tr = checkbox.parent().parent().eq(i);
           var td = tr.children();
-
-          // 체크된 row의 모든 값을 배열에 담는다.
-          // rowData.push(tr.text());
-
-          // td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
           var no = td.eq(1).text()+", "
           userid = td.eq(2).text();
-
-          // 가져온 값을 배열에 담는다.
-          // tdArr.push(no);
-          // tdArr.push(userid);
           console.log("no : " + no);
           console.log("userid : " + userid);
-          //console.log("name : " + name);
-          //console.log("email : " + email);
         });
 
         var xhr = new XMLHttpRequest();
@@ -107,14 +90,9 @@
             console.log("200 ok");
           }
         }
-    //  $("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
-    //  $("#ex3_Result2").html(tdArr);
       });
-
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-       <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-       <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     {% else %}
         <p>잘 못된 접근 입니다.</p>
