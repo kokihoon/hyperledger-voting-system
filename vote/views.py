@@ -39,7 +39,7 @@ def participation_rate(request):
             voted_count += len(listing['votes'])
 
         all_user_cnt = 1
-        all_user_cnt = len(User.objects.all())
+        all_user_cnt = len(User.objects.filter(is_superuser=False))
 
         rate = voted_count / all_user_cnt * 100
         print('rate', rate)
