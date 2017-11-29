@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 
 from .models import UserCheck
 
+
 def index(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -24,7 +25,8 @@ def index(request):
         else:
             return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
-        return render(request, 'main/login.html')
+        if True:
+            return render(request, 'main/login.html')
+        else:
+            return render(request, 'main/Elected.html')
 
-def elected(request):
-    return render(request, 'main/Elected.html')
