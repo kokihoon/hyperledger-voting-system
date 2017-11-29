@@ -25,3 +25,6 @@ def index(request):
             return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
         return render(request, 'main/login.html')
+
+def elected(request):
+    return render(request, 'main/Elected.html')
