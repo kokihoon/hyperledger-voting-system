@@ -18,7 +18,8 @@
                     {% csrf_token %}
                     <label for="end" class="col-sm-4 control-label lead text-danger"><strong>투표 마감 기한 설정</strong></label>
                     <div class="col-sm-6">
-                        <input type="datetime-local" name="endtime" id="end">
+                        <input type="datetime-local" name="endtime" id="end"><br><br>
+                        <input type="text" placeholder="candidateListing id's" name="candidateListing" id="candidate"><br><br>
                         <input type="submit" value="설정" class="btn btn-danger btn-lg"/>
                     </div>
                 </form>
