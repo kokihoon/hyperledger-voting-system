@@ -5,6 +5,11 @@
     <title>super user page</title>
 </head>
 <body>
-    종료시간 설정
+        
+    <form action="/superuser/control" method="POST">
+        {% csrf_token %}
+        끝나는 날짜지정 <input type="datetime-local" name="endtime">
+        <input type="submit">
+    </form>
 </body>
 </html>
