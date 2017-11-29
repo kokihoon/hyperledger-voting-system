@@ -21,7 +21,7 @@ def index(request):
     print(r.text)
     if r.status_code == 200:
         rend = render(request, 'vote/vote.html', {'user_id': user_id})
-       # logout(request)
+        logout(request)
         return rend
     else:
         return HttpResponse('로그인 실패. 다시 시도 해보세요.')
