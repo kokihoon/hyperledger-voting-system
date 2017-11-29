@@ -35,7 +35,7 @@
                 var contact = JSON.parse(jsonText);
                 rating = contact["rate"];
                 var elem = document.getElementById("current_vote");
-                var width = rating-780;
+                var width = rating;
                 if(width <= 100) {
                   elem.style.width = width + '%';
                   elem.innerHTML = width *1 + '%';
