@@ -126,6 +126,6 @@ STATIC_URL = '/static/'
 
 DOMAIN_URL = secrect_setting.DOMAIN_URL
 DOMAIN_API_URL = DOMAIN_URL + "/api"
-MEMBER_URL = DOMAIN_API_URL + "/Member"
-VEHICLE_LISTING_RUL = DOMAIN_API_URL + "/VehicleListing"
+MEMBER_URL = DOMAIN_API_URL + "/Voter"
+VEHICLE_LISTING_RUL = DOMAIN_API_URL + "/CandidateListing"
 
