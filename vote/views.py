@@ -18,7 +18,7 @@ def index(request):
         MEMBER_URL,
         json=request_json
     )
-
+    print(r.text)
     if r.status_code == 200:
         rend = render(request, 'vote/vote.html', {'user_id': user_id})
        # logout(request)
@@ -35,7 +35,7 @@ def participation_rate(request):
 
     if r.status_code == 200:
         for listing in r_json:
-            voted_count += len(listing['offers'])
+            voted_count += len(listing['votes'])
 
         all_user_cnt = len(User.objects.all())
 
@@ -52,9 +52,7 @@ def get_id(user) -> str:
 
 def get_number_json(user_id):
     return {
-        "$class": "org.acme.vehicle.auction.Member",
-        "balance": 1,
-        "email": user_id,
-        "firstName": user_id,
-        "lastName": user_id
+        "$class": "org.ioks.vote.Voter",
+        "ballot": 1,
+        "id": user_id
     }

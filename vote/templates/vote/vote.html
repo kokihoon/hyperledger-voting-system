@@ -25,9 +25,9 @@
         <h1 class="text-center text-danger">후보자 리스트</h1>
         <table id="example-table-3" width="100%" class="table table-bordered table-hover text-center">
           <thead style="background-color:red; color: white;">
-              <th>선택</th>
-              <th>기호</th>
-              <th>후보자 이름</th>
+              <th class="text-center">선택</th>
+              <th class="text-center">기호</th>
+              <th class="text-center">후보자 이름</th>
             
           </thead>
           <tbody id ="tbody1">
@@ -35,7 +35,7 @@
               var candidate = [];
               $(document).ready(function(){
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'http://210.110.180.44:3000/api/Vehicle', true);
+                xhr.open('GET', 'http://210.110.180.44:3000/api/Candidate', true);
                 xhr.send(null);
 
                 xhr.onload = function() {
@@ -45,19 +45,17 @@
                     var contact = JSON.parse(jsonText);
                   
                     for(var i = 0; i < contact.length; i++) {
-                      candidate.push(contact[i].vin);
+                      candidate.push(contact[i].can);
                     }
                     console.log(candidate);
                   }
                   var tbody2 = document.getElementById("tbody1");
                 
                   for(var i =0; i <candidate.length; i++) {
-                    tbody2.innerHTML +='<td><input type="radio" name="no" value=array[i]></td><td>'+ i +'</td><td>'+candidate[i]+'</td>';
+                    tbody2.innerHTML +='<td><input type="radio" name="no" value=array[i]></td><td>'+ (i+1) +'</td><td>'+candidate[i]+'</td>';
                   }
                 }
-              
               });
-        
             </script>
           </tbody>
         </table>
@@ -96,13 +94,13 @@
         });
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://210.110.180.44:3000/api/Offer', true);
+        xhr.open('POST', 'http://210.110.180.44:3000/api/Vote', true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.send(JSON.stringify({
-          "$class": "org.acme.vehicle.auction.Offer",
-          "bidPrice": 1,
-          "listing": "org.acme.vehicle.auction.VehicleListing#"+userid,
-          "member": "org.acme.vehicle.auction.Member#"+'{{ user_id }}'
+          "$class": "org.ioks.vote.Vote",
+          "ballot": 1,
+          "listing": "org.ioks.vote.CandidateListing#"+userid,
+          "voter": "org.ioks.vote.Voter#"+'{{ user_id }}'
         }));
         xhr.onload = function() {
           if(xhr.status == 200) {
